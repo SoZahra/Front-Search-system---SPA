@@ -1,6 +1,6 @@
 import TransactionCard from './TransactionCard';
 
-const TransactionList = ({ transactions, isSearching }) => {
+const TransactionList = ({ transactions, isSearching, onCardClick }) => {
   if (isSearching) {
     return (
       <div className="flex justify-center items-center py-20">
@@ -24,11 +24,13 @@ const TransactionList = ({ transactions, isSearching }) => {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pb-8">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pb-8 auto-rows-fr">
       {transactions.map((transaction) => (
-        <TransactionCard key={transaction.paymentId} transaction={transaction} />
+        <TransactionCard key={transaction.paymentId} 
+							transaction={transaction} 
+							onCardClick={onCardClick}/>
       ))}
-    </div>
+  </div>
   );
 };
 

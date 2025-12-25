@@ -1,20 +1,31 @@
 import { useState } from 'react';
 import SearchBar from './components/SearchBar';
 import TransactionList from './components/TransactionList';
+import TransactionModal from './components/TransactionModal';
 import { useTransactionSearch } from './hooks/useTransactionSearch';
 import transactionsData from './data/transactions.json';
 
 function App() {
   const { searchTerm, setSearchTerm, filteredTransactions, isSearching } =
     useTransactionSearch(transactionsData);
+  
+  const [selectedTransaction, setSelectedTransaction] = useState(null);
+
+  const handleCardClick = (transaction) => {
+    setSelectedTransaction(transaction);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedTransaction(null);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
       {/* Header */}
       <header className="bg-white shadow-sm border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center">
           <h1 className="text-3xl font-bold text-gray-900">
-            💳 Lydia Transactions
+            Transactions
           </h1>
           <p className="text-gray-600 mt-1">
             Recherchez vos transactions facilement
@@ -33,8 +44,17 @@ function App() {
         <TransactionList
           transactions={filteredTransactions}
           isSearching={isSearching}
+          onCardClick={handleCardClick}
         />
       </main>
+
+      {/* Modal */}
+      {selectedTransaction && (
+        <TransactionModal
+          transaction={selectedTransaction}
+          onClose={handleCloseModal}
+        />
+      )}
     </div>
   );
 }
