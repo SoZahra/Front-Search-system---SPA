@@ -12,7 +12,7 @@ export const filterTransactionsByLabel = (transactions, searchTerm) => {
     if(!searchTerm || searchTerm.trim() === '')
         return transactions;
 
-    const normalizedSearch = searchTerm.toLowerCase().trim();
+    const normalizedSearch = fixEncoding(searchTerm.toLowerCase().trim());
 
     return transactions.filter((transaction) => {
         const cleanedLabel = fixEncoding(transaction.label)
