@@ -1,12 +1,11 @@
+import { fixEncoding } from "./formatUtils";
+
 /**
  * Filtre les transactions basées sur le label
  * @param {Array} transactions - Liste des transactions
  * @param {string} searchTerm - Terme de recherche
  * @returns {Array} - Transactions filtrées
  */
-
-import { fixEncoding } from "./formatUtils";
-
 
 export const filterTransactionsByLabel = (transactions, searchTerm) => {
 
@@ -17,7 +16,7 @@ export const filterTransactionsByLabel = (transactions, searchTerm) => {
 
     return transactions.filter((transaction) => {
         const cleanedLabel = fixEncoding(transaction.label)
-        const normalizedLabel = transaction.label.toLowerCase();
+        const normalizedLabel = cleanedLabel.toLowerCase();
         return normalizedLabel.includes(normalizedSearch);
     });
 }
