@@ -1,6 +1,13 @@
 
 // correction des problemes d'encodage
 
+export const removeAccents = (str) => {
+  if(!str)
+    return str;
+
+  return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+}
+
 export const fixEncoding = (text) => {
     if(!text)
         return text;

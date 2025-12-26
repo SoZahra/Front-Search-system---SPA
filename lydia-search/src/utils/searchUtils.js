@@ -1,4 +1,4 @@
-import { fixEncoding } from "./formatUtils";
+import { fixEncoding, removeAccents } from "./formatUtils";
 
 /**
  * Filtre les transactions basées sur le label
@@ -8,15 +8,17 @@ import { fixEncoding } from "./formatUtils";
  */
 
 export const filterTransactionsByLabel = (transactions, searchTerm) => {
+  if (!searchTerm || searchTerm.trim() === '') {
+    return transactions;
+  }
 
-    if(!searchTerm || searchTerm.trim() === '')
-        return transactions;
+  const fixecSearch = fixEncoding(searchTerm); //corriger l'encodage du therme
 
-    const normalizedSearch = fixEncoding(searchTerm.toLowerCase().trim());
+  const normalizedSearch = removeAccents(fixecSearch.toLowerCase().trim()); // lowercase + sans accents
 
-    return transactions.filter((transaction) => {
-        const cleanedLabel = fixEncoding(transaction.label)
-        const normalizedLabel = cleanedLabel.toLowerCase();
-        return normalizedLabel.includes(normalizedSearch);
-    });
-}
+  return transactions.filter((transaction) => {
+    const cleanedLabel = fixEncoding(transaction.label);
+    const normalizedLabel = removeAccents(cleanedLabel.toLowerCase());
+    return normalizedLabel.includes(normalizedSearch);
+  });
+};
