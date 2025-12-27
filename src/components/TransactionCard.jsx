@@ -6,7 +6,7 @@ const TransactionCard = ({ transaction, onCardClick }) => {
   const cleanLabel = fixEncoding(transaction.label);
   const cleanAmount = fixEncoding(transaction.amount);
 
-  // Déterminer le statut avec icône et couleur
+  // Déterminer le statut avec icone et couleur
   const getStatusConfig = (status) => {
     switch (status) {
       case 'completed':
